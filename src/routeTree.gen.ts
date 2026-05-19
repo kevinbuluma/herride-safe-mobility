@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TripRouteImport } from './routes/trip'
+import { Route as SosRouteImport } from './routes/sos'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HomeRouteImport } from './routes/home'
@@ -19,6 +20,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const TripRoute = TripRouteImport.update({
   id: '/trip',
   path: '/trip',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SosRoute = SosRouteImport.update({
+  id: '/sos',
+  path: '/sos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/sos': typeof SosRoute
   '/trip': typeof TripRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/sos': typeof SosRoute
   '/trip': typeof TripRoute
 }
 export interface FileRoutesById {
@@ -70,14 +78,30 @@ export interface FileRoutesById {
   '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/sos': typeof SosRoute
   '/trip': typeof TripRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/book' | '/home' | '/login' | '/onboarding' | '/trip'
+  fullPaths:
+    | '/'
+    | '/book'
+    | '/home'
+    | '/login'
+    | '/onboarding'
+    | '/sos'
+    | '/trip'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/book' | '/home' | '/login' | '/onboarding' | '/trip'
-  id: '__root__' | '/' | '/book' | '/home' | '/login' | '/onboarding' | '/trip'
+  to: '/' | '/book' | '/home' | '/login' | '/onboarding' | '/sos' | '/trip'
+  id:
+    | '__root__'
+    | '/'
+    | '/book'
+    | '/home'
+    | '/login'
+    | '/onboarding'
+    | '/sos'
+    | '/trip'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -86,6 +110,7 @@ export interface RootRouteChildren {
   HomeRoute: typeof HomeRoute
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
+  SosRoute: typeof SosRoute
   TripRoute: typeof TripRoute
 }
 
@@ -96,6 +121,13 @@ declare module '@tanstack/react-router' {
       path: '/trip'
       fullPath: '/trip'
       preLoaderRoute: typeof TripRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sos': {
+      id: '/sos'
+      path: '/sos'
+      fullPath: '/sos'
+      preLoaderRoute: typeof SosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -142,6 +174,7 @@ const rootRouteChildren: RootRouteChildren = {
   HomeRoute: HomeRoute,
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
+  SosRoute: SosRoute,
   TripRoute: TripRoute,
 }
 export const routeTree = rootRouteImport
