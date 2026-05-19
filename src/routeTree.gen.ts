@@ -10,8 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WalletRouteImport } from './routes/wallet'
+import { Route as TripsRouteImport } from './routes/trips'
 import { Route as TripRouteImport } from './routes/trip'
 import { Route as SosRouteImport } from './routes/sos'
+import { Route as SafetyRouteImport } from './routes/safety'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HomeRouteImport } from './routes/home'
@@ -23,6 +26,11 @@ const WalletRoute = WalletRouteImport.update({
   path: '/wallet',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TripsRoute = TripsRouteImport.update({
+  id: '/trips',
+  path: '/trips',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TripRoute = TripRouteImport.update({
   id: '/trip',
   path: '/trip',
@@ -31,6 +39,16 @@ const TripRoute = TripRouteImport.update({
 const SosRoute = SosRouteImport.update({
   id: '/sos',
   path: '/sos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SafetyRoute = SafetyRouteImport.update({
+  id: '/safety',
+  path: '/safety',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -65,8 +83,11 @@ export interface FileRoutesByFullPath {
   '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/profile': typeof ProfileRoute
+  '/safety': typeof SafetyRoute
   '/sos': typeof SosRoute
   '/trip': typeof TripRoute
+  '/trips': typeof TripsRoute
   '/wallet': typeof WalletRoute
 }
 export interface FileRoutesByTo {
@@ -75,8 +96,11 @@ export interface FileRoutesByTo {
   '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/profile': typeof ProfileRoute
+  '/safety': typeof SafetyRoute
   '/sos': typeof SosRoute
   '/trip': typeof TripRoute
+  '/trips': typeof TripsRoute
   '/wallet': typeof WalletRoute
 }
 export interface FileRoutesById {
@@ -86,8 +110,11 @@ export interface FileRoutesById {
   '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/profile': typeof ProfileRoute
+  '/safety': typeof SafetyRoute
   '/sos': typeof SosRoute
   '/trip': typeof TripRoute
+  '/trips': typeof TripsRoute
   '/wallet': typeof WalletRoute
 }
 export interface FileRouteTypes {
@@ -98,8 +125,11 @@ export interface FileRouteTypes {
     | '/home'
     | '/login'
     | '/onboarding'
+    | '/profile'
+    | '/safety'
     | '/sos'
     | '/trip'
+    | '/trips'
     | '/wallet'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -108,8 +138,11 @@ export interface FileRouteTypes {
     | '/home'
     | '/login'
     | '/onboarding'
+    | '/profile'
+    | '/safety'
     | '/sos'
     | '/trip'
+    | '/trips'
     | '/wallet'
   id:
     | '__root__'
@@ -118,8 +151,11 @@ export interface FileRouteTypes {
     | '/home'
     | '/login'
     | '/onboarding'
+    | '/profile'
+    | '/safety'
     | '/sos'
     | '/trip'
+    | '/trips'
     | '/wallet'
   fileRoutesById: FileRoutesById
 }
@@ -129,8 +165,11 @@ export interface RootRouteChildren {
   HomeRoute: typeof HomeRoute
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
+  ProfileRoute: typeof ProfileRoute
+  SafetyRoute: typeof SafetyRoute
   SosRoute: typeof SosRoute
   TripRoute: typeof TripRoute
+  TripsRoute: typeof TripsRoute
   WalletRoute: typeof WalletRoute
 }
 
@@ -141,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/wallet'
       fullPath: '/wallet'
       preLoaderRoute: typeof WalletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trips': {
+      id: '/trips'
+      path: '/trips'
+      fullPath: '/trips'
+      preLoaderRoute: typeof TripsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/trip': {
@@ -155,6 +201,20 @@ declare module '@tanstack/react-router' {
       path: '/sos'
       fullPath: '/sos'
       preLoaderRoute: typeof SosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/safety': {
+      id: '/safety'
+      path: '/safety'
+      fullPath: '/safety'
+      preLoaderRoute: typeof SafetyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -201,10 +261,23 @@ const rootRouteChildren: RootRouteChildren = {
   HomeRoute: HomeRoute,
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
+  ProfileRoute: ProfileRoute,
+  SafetyRoute: SafetyRoute,
   SosRoute: SosRoute,
   TripRoute: TripRoute,
+  TripsRoute: TripsRoute,
   WalletRoute: WalletRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
