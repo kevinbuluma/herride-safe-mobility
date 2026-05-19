@@ -142,3 +142,52 @@
     color: var(--color-foreground);
   }
 }
+
+@layer utilities {
+  .phone-frame {
+    max-width: 28rem;
+    margin-inline: auto;
+    min-height: 100dvh;
+    position: relative;
+    background:
+      radial-gradient(120% 60% at 10% 0%, oklch(0.95 0.08 350 / 0.7), transparent 60%),
+      radial-gradient(120% 60% at 100% 100%, oklch(0.92 0.06 20 / 0.5), transparent 60%),
+      var(--color-background);
+    overflow: hidden;
+  }
+  .glass {
+    background: color-mix(in oklch, white 65%, transparent);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid color-mix(in oklch, white 60%, transparent);
+  }
+  .glow-pink {
+    box-shadow: 0 10px 30px -8px oklch(0.78 0.18 5 / 0.55), 0 0 0 1px oklch(1 0 0 / 0.4) inset;
+  }
+  .map-bg {
+    background-color: #f5e9ee;
+    background-image:
+      linear-gradient(transparent 95%, rgba(255,192,203,0.55) 95%),
+      linear-gradient(90deg, transparent 95%, rgba(255,192,203,0.55) 95%),
+      radial-gradient(circle at 30% 40%, rgba(255,192,203,0.4), transparent 40%),
+      radial-gradient(circle at 70% 70%, rgba(255,182,193,0.4), transparent 40%);
+    background-size: 28px 28px, 28px 28px, auto, auto;
+  }
+  .route-line {
+    stroke-dasharray: 8 6;
+    animation: dash 1.2s linear infinite;
+  }
+  @keyframes dash {
+    to { stroke-dashoffset: -28; }
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .floaty { animation: floaty 3s ease-in-out infinite; }
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 0 0 oklch(0.78 0.2 5 / 0.45); }
+    50% { box-shadow: 0 0 0 18px oklch(0.78 0.2 5 / 0); }
+  }
+  .pulse-glow { animation: pulseGlow 1.6s ease-out infinite; }
+}
