@@ -75,11 +75,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "HerRide — Safe rides for women, by women" },
       { name: "description", content: "HerRide is a women-only ride-hailing platform with verified female drivers, live trip sharing, SOS safety, and affordable plans." },
       { name: "author", content: "HerRide" },
-      { property: "og:title", content: "HerRide — Safe rides for women" },
-      { property: "og:description", content: "Verified female drivers. Live trip sharing. Affordable, premium, trusted." },
+      { property: "og:title", content: "HerRide — Safe rides for women, by women" },
+      { property: "og:description", content: "HerRide is a women-only ride-hailing platform with verified female drivers, live trip sharing, SOS safety, and affordable plans." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "HerRide — Safe rides for women, by women" },
+      { name: "twitter:description", content: "HerRide is a women-only ride-hailing platform with verified female drivers, live trip sharing, SOS safety, and affordable plans." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/4eb6db5f-32d0-4e74-8ec3-0ecc55dc017d" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/4eb6db5f-32d0-4e74-8ec3-0ecc55dc017d" },
     ],
     links: [
       {
