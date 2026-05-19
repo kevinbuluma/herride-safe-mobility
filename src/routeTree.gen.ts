@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WalletRouteImport } from './routes/wallet'
 import { Route as TripRouteImport } from './routes/trip'
 import { Route as SosRouteImport } from './routes/sos'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
@@ -17,6 +18,11 @@ import { Route as HomeRouteImport } from './routes/home'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WalletRoute = WalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TripRoute = TripRouteImport.update({
   id: '/trip',
   path: '/trip',
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/sos': typeof SosRoute
   '/trip': typeof TripRoute
+  '/wallet': typeof WalletRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/sos': typeof SosRoute
   '/trip': typeof TripRoute
+  '/wallet': typeof WalletRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +88,7 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/sos': typeof SosRoute
   '/trip': typeof TripRoute
+  '/wallet': typeof WalletRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,8 +100,17 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/sos'
     | '/trip'
+    | '/wallet'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/book' | '/home' | '/login' | '/onboarding' | '/sos' | '/trip'
+  to:
+    | '/'
+    | '/book'
+    | '/home'
+    | '/login'
+    | '/onboarding'
+    | '/sos'
+    | '/trip'
+    | '/wallet'
   id:
     | '__root__'
     | '/'
@@ -102,6 +120,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/sos'
     | '/trip'
+    | '/wallet'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -112,10 +131,18 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   SosRoute: typeof SosRoute
   TripRoute: typeof TripRoute
+  WalletRoute: typeof WalletRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wallet': {
+      id: '/wallet'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof WalletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trip': {
       id: '/trip'
       path: '/trip'
@@ -176,6 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   SosRoute: SosRoute,
   TripRoute: TripRoute,
+  WalletRoute: WalletRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
