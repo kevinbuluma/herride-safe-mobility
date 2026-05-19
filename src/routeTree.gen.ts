@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TripRouteImport } from './routes/trip'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TripRoute = TripRouteImport.update({
+  id: '/trip',
+  path: '/trip',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/trip': typeof TripRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/trip': typeof TripRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,14 @@ export interface FileRoutesById {
   '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/trip': typeof TripRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/book' | '/home' | '/login' | '/onboarding'
+  fullPaths: '/' | '/book' | '/home' | '/login' | '/onboarding' | '/trip'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/book' | '/home' | '/login' | '/onboarding'
-  id: '__root__' | '/' | '/book' | '/home' | '/login' | '/onboarding'
+  to: '/' | '/book' | '/home' | '/login' | '/onboarding' | '/trip'
+  id: '__root__' | '/' | '/book' | '/home' | '/login' | '/onboarding' | '/trip'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,10 +86,18 @@ export interface RootRouteChildren {
   HomeRoute: typeof HomeRoute
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
+  TripRoute: typeof TripRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/trip': {
+      id: '/trip'
+      path: '/trip'
+      fullPath: '/trip'
+      preLoaderRoute: typeof TripRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/onboarding': {
       id: '/onboarding'
       path: '/onboarding'
@@ -125,6 +142,7 @@ const rootRouteChildren: RootRouteChildren = {
   HomeRoute: HomeRoute,
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
+  TripRoute: TripRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
